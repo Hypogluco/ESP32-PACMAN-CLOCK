@@ -1,75 +1,67 @@
-<header>
+# Pacman Clock with Weather Temperature and Color Customizations
+"For the moment the code is in French, I will make a second version in English."
 
-<!--
-  <<< Author notes: Course header >>>
-  Include a 1280×640 image, course title in sentence case, and a concise description in emphasis.
-  In your repository settings: enable template repository, add your 1280×640 social image, auto delete head branches.
-  Add your open source license, GitHub uses MIT license.
--->
+## Description
+This project uses an ESP32 board and a 64x64 LED matrix display. While running a game demo in the background, the clock, date, and game map can be customized via a web page, allowing you to change colors and adjust brightness.
 
-# Introduction to GitHub
+## Required Hardware
+- **ESP32 30 Pin Board**
+- **64x64 LED Matrix Display HUB75** (Compatible with the **ESP32-HUB75-MatrixPanel-I2S-DMA** library)
 
-_Get started using GitHub in less than an hour._
+## Libraries Used
+- **ESP32-HUB75-MatrixPanel-I2S-DMA**: for displaying on the LED matrix screen.
+- **WiFiConnect**: for managing Wi-Fi connection.
+- **CWDateTime**: for managing time and date.
+- **HTTPClient**: for fetching weather data from the OpenWeatherMap API.
+- **Preferences**: for managing the saving of settings (such as colors and brightness).
+- **ezTime**: for handling time zones and synchronizing time.
 
-</header>
+## Features
+- **Background Game Demo**: A Pacman game demo with ghosts runs in the background of the screen.
+- **Automatic Brightness Adjustment**: The screen brightness is automatically adjusted based on the time to save energy.
+- **Web Page Customization**: You can modify the colors of the clock, date, and game map.
+- **Brightness Adjustment**: The screen brightness can be adjusted via the web page.
+- **Settings Saving**: All settings, including colors and brightness, are saved even after a board restart.
 
-<!--
-  <<< Author notes: Step 1 >>>
-  Choose 3-5 steps for your course.
-  The first step is always the hardest, so pick something easy!
-  Link to docs.github.com for further explanations.
-  Encourage users to open new tabs for steps!
--->
+## Notes
+- The screen brightness is automatically adjusted based on the time to save energy.
+- This project was created based on the GitHub projects "ClockWise" by jnthas and Otis Irachi.
 
-## Step 1: Create a branch
+## License
+This project is under the MIT License, which means you are free to use, modify, and distribute it according to the license terms.
 
-_Welcome to "Introduction to GitHub"! :wave:_
+## Author
+HypoGluco
+November 2024
 
-**What is GitHub?**: GitHub is a collaboration platform that uses _[Git](https://docs.github.com/get-started/quickstart/github-glossary#git)_ for versioning. GitHub is a popular place to share and contribute to [open-source](https://docs.github.com/get-started/quickstart/github-glossary#open-source) software.
-<br>:tv: [Video: What is GitHub?](https://www.youtube.com/watch?v=pBy1zgt0XPc)
+## Reminder for "ESP32-HUB75-MatrixPanel-I2S-DMA"
+- **Modify the pins in the `"esp32-default-pins.hpp"` file for the 64x64 screen**. Without this modification, the screen will not work.
+- Path to the pin configuration file: `C:\Users\*****\Documents\Arduino\libraries\ESP32_HUB75_LED_MATRIX_PANEL_DMA_Display\src\platforms\esp32\esp32-default-pins.hpp`
 
-**What is a repository?**: A _[repository](https://docs.github.com/get-started/quickstart/github-glossary#repository)_ is a project containing files and folders. A repository tracks versions of files and folders. For more information, see "[About repositories](https://docs.github.com/en/repositories/creating-and-managing-repositories/about-repositories)" from GitHub Docs.
+## Pin Configuration
+Modify the `"esp32-default-pins.hpp"` file to define the pins used to connect the LED screen. Default configuration example:
 
-**What is a branch?**: A _[branch](https://docs.github.com/en/get-started/quickstart/github-glossary#branch)_ is a parallel version of your repository. By default, your repository has one branch named `main` and it is considered to be the definitive branch. Creating additional branches allows you to copy the `main` branch of your repository and safely make any changes without disrupting the main project. Many people use branches to work on specific features without affecting any other parts of the project.
+```cpp
+#pragma once
 
-Branches allow you to separate your work from the `main` branch. In other words, everyone's work is safe while you contribute. For more information, see "[About branches](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-branches)".
+#define R1_PIN_DEFAULT  25
+#define G1_PIN_DEFAULT  26
+#define B1_PIN_DEFAULT  27
+#define R2_PIN_DEFAULT  14
+#define G2_PIN_DEFAULT  12
+#define B2_PIN_DEFAULT  13
 
-**What is a profile README?**: A _[profile README](https://docs.github.com/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/managing-your-profile-readme)_ is essentially an "About me" section on your GitHub profile where you can share information about yourself with the community on GitHub.com. GitHub shows your profile README at the top of your profile page. For more information, see "[Managing your profile README](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/managing-your-profile-readme)".
+#define A_PIN_DEFAULT   23
+#define B_PIN_DEFAULT   19
+#define C_PIN_DEFAULT   5
+#define D_PIN_DEFAULT   17
+#define E_PIN_DEFAULT   18 // IMPORTANT: Change to a valid pin if using a 64x64px panel.
 
-![profile-readme-example](/images/profile-readme-example.png)
+#define LAT_PIN_DEFAULT 4
+#define OE_PIN_DEFAULT  15
+#define CLK_PIN_DEFAULT 16
 
-### :keyboard: Activity: Your first branch
 
-1. Open a new browser tab and navigate to your newly made repository. Then, work on the steps in your second tab while you read the instructions in this tab.
-2. Navigate to the **< > Code** tab in the header menu of your repository.
+```
 
-   ![code-tab](/images/code-tab.png)
-
-3. Click on the **main** branch drop-down.
-
-   ![main-branch-dropdown](/images/main-branch-dropdown.png)
-
-4. In the field, name your branch `my-first-branch`. In this case, the name must be `my-first-branch` to trigger the course workflow.
-5. Click **Create branch: my-first-branch** to create your branch.
-
-   ![create-branch-button](/images/create-branch-button.png)
-
-   The branch will automatically switch to the one you have just created.
-   The **main** branch drop-down bar will reflect your new branch and display the new branch name.
-
-6. Wait about 20 seconds then refresh this page (the one you're following instructions from). [GitHub Actions](https://docs.github.com/en/actions) will automatically update to the next step.
-
-<footer>
-
-<!--
-  <<< Author notes: Footer >>>
-  Add a link to get support, GitHub status page, code of conduct, license link.
--->
-
----
-
-Get help: [Post in our discussion board](https://github.com/orgs/skills/discussions/categories/introduction-to-github) &bull; [Review the GitHub status page](https://www.githubstatus.com/)
-
-&copy; 2024 GitHub &bull; [Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/code_of_conduct.md) &bull; [MIT License](https://gh.io/mit)
-
-</footer>
+https://github.com/user-attachments/assets/bf49dcfc-0325-40cb-bc75-9e92f6833a43
